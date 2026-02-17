@@ -14,6 +14,7 @@ pipeline {
             steps {
                 dir('devtrack-backend') {
                     bat 'npm install'
+                    bat 'dir' // List contents of backend folder
                 }
             }
         }
@@ -29,7 +30,25 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('trackwise') {
-                    bat 'echo "Frontend is static, skipping build"'
+                    bat 'dir' // List contents of frontend folder
+                    bat 'echo "Frontend is static, no build needed"'
+                }
+            }
+        }
+
+        stage('Deploy Backend') {
+            steps {
+                dir('devtrack-backend') {
+                    // Use PM2 if installed, otherwise fallback to node
+                    bat 'pm2 restart index.js || pm2 start index.js || start cmd /k "node index.js"'
+                }
+            }
+        }
+
+        stage('Deploy Frontend') {
+            steps {
+                dir('trackwise') {
+                    bat 'start cmd /k "explorer ."' // Open folder for testing static frontend
                 }
             }
         }
