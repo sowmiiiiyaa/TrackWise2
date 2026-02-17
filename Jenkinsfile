@@ -13,7 +13,7 @@ pipeline {
         stage('Install Backend Dependencies') {
             steps {
                 dir('devtrack-backend') {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
         stage('Run Backend Tests') {
             steps {
                 dir('devtrack-backend') {
-                    sh 'npm test || echo "Tests skipped or failed"'
+                    bat 'npm test || echo Tests skipped or failed'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('trackwise') {
-                    sh 'echo "Frontend is static, skipping build"'
+                    bat 'echo Frontend is static, skipping build'
                 }
             }
         }
